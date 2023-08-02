@@ -1,6 +1,6 @@
 pySZe
 -----
-A python package to create mock observable of current and forthcoming telescopes.
+A python package to model the Sunyaez-Zeldovich (SZ) effect observations.
 
 PREREQUISITES
 -------------
