@@ -6,11 +6,10 @@ from scipy.integrate import quad, simps
 from scipy.signal import convolve2d, fftconvolve
 from scipy.optimize import fsolve
 
-import baryonification as bfc
+import pySZe
+import pySZe as bfc
 from tqdm import tqdm
 import pickle 
-
-import pySZe
 
 from matplotlib import rcParams, ticker, cm
 rcParams['font.family'] = 'sans-serif'
