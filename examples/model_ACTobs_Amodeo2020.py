@@ -1,16 +1,13 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-import baryonification as bfc
+import pySZe as bfc
 from tqdm import tqdm
 import pickle 
 
 from scipy.interpolate import splrep, splev, griddata, interp1d
 from astropy.cosmology import Planck15 as cosmo
 from astropy import units, constants 
-
-import MockObs
-from MockObs import ACT
 
 # COSMO PARAMETERS ################################################
 

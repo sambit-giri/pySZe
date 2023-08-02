@@ -164,12 +164,12 @@ class ACT:
 							[5.999999999999999, 13.268047497147224]
 							]).T
 		if ax is None: fig, ax = plt.subplots(figsize=(8,6))
-		ax.errorbar(ACT_f90_mean[0], ACT_f90_mean[1], yerr=[ACT_f90_up[1]-ACT_f90_mean[1],ACT_f90_mean[1]-ACT_f90_dn[1]], c='m', ms=15, ls=' ', alpha=0.99, label='90GHz', marker='.')
-		ax.errorbar(ACT_f150_mean[0], ACT_f150_mean[1], yerr=[ACT_f150_up[1]-ACT_f150_mean[1],ACT_f150_mean[1]-ACT_f150_dn[1]], c='b', ms=15, ls=' ', alpha=0.99, label='150GHz', marker='.')
-		ax.plot(NFW_f90[0], NFW_f90[1], c='m', ms=15, ls='--', alpha=0.99, label='NFW, 90GHz')
-		ax.plot(NFW_f150[0], NFW_f150[1], c='b', ms=15, ls='--', alpha=0.99, label='NFW, 150GHz')
-		if self.dTkSZ_arcmins_grid_f90_thetad is not None: ax.loglog(self.thetad_s, self.dTkSZ_arcmins_grid_f90_thetad , c='grey', ls='-.', lw=3, label='NFW, 90GHz model')
-		if self.dTkSZ_arcmins_grid_f150_thetad is not None: ax.loglog(self.thetad_s, self.dTkSZ_arcmins_grid_f150_thetad, c='grey', ls=':', lw=3, label='NFW, 150GHz model')
+		ax.errorbar(ACT_f90_mean[0], ACT_f90_mean[1], yerr=[ACT_f90_up[1]-ACT_f90_mean[1],ACT_f90_mean[1]-ACT_f90_dn[1]], c='m', ms=15, ls=' ', alpha=0.99, label='90GHz (Schaan et al. 2021)', marker='.')
+		ax.errorbar(ACT_f150_mean[0], ACT_f150_mean[1], yerr=[ACT_f150_up[1]-ACT_f150_mean[1],ACT_f150_mean[1]-ACT_f150_dn[1]], c='b', ms=15, ls=' ', alpha=0.99, label='150GHz (Schaan et al. 2021)', marker='.')
+		ax.plot(NFW_f90[0], NFW_f90[1], c='m', ms=15, ls='--', alpha=0.99, label='NFW, 90GHz (Schaan et al. 2021)')
+		ax.plot(NFW_f150[0], NFW_f150[1], c='b', ms=15, ls='--', alpha=0.99, label='NFW, 150GHz (Schaan et al. 2021)')
+		if self.dTkSZ_arcmins_grid_f90_thetad is not None: ax.loglog(self.thetad_s, self.dTkSZ_arcmins_grid_f90_thetad , c='grey', ls='-.', lw=3, label='NFW, 90GHz (pySZe)')
+		if self.dTkSZ_arcmins_grid_f150_thetad is not None: ax.loglog(self.thetad_s, self.dTkSZ_arcmins_grid_f150_thetad, c='grey', ls=':', lw=3, label='NFW, 150GHz (pySZe)')
 		ax.axis([0.5,6.5,0.03,70])
 		ax.set_xscale('linear')
 		ax.set_yscale('log')

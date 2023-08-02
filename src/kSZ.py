@@ -12,10 +12,10 @@ from glob import glob
 import pickle
 from tqdm import tqdm
 
-try:
-	import baryonification as bfc
-except:
-	print("Install baryonification package.")
+# try:
+# 	import baryonification as bfc
+# except:
+# 	print("Install baryonification package.")
 
 from .cosmo import * 
 from .profiles import *
@@ -57,11 +57,11 @@ def get_fit_dTkSZ_theta(Mv, z, z_min=None, z_max=None, theta_nbin=1000, l_nbin=1
 	tau_theta = np.zeros(theta_bins_2_r.shape)
 
 	for i in range(theta_bins_2_r.shape[0]):
-	    thetr = theta_bins_2_r[i]
-	    ll  = np.sqrt(l_bins**2+thetr**2)
-	    nel = fit_ne(ll)
-	    Ine = (constants.sigma_T*simps(nel.value, l_bins.value)*nel.unit*l_bins.unit).to('')
-	    tau_theta[i] = Ine.value
+		thetr = theta_bins_2_r[i]
+		ll  = np.sqrt(l_bins**2+thetr**2)
+		nel = fit_ne(ll)
+		Ine = (constants.sigma_T*simps(nel.value, l_bins.value)*nel.unit*l_bins.unit).to('')
+		tau_theta[i] = Ine.value
 
 	fit_dTkSZ_div_Tcmb_theta = lambda thet: 10**interp1d(np.log10(theta_bins.to('arcmin').value), 
                                 np.log10(tau_theta),
@@ -93,7 +93,8 @@ class deltaTkSZ:
 		cosmo_corr = splev(rbin,corr_tck)
 
 		#2-halo term
-		bin_r, bin_m, bin_bias, bin_corr = bfc.cosmo(self.par)
+		# bin_r, bin_m, bin_bias, bin_corr = bfc.cosmo(self.par)
+		bin_r, bin_m, bin_bias, bin_corr = cosmo(self.par)
 
 		self.rbin = rbin
 		self.bias_tck = bias_tck
@@ -119,7 +120,8 @@ class deltaTkSZ:
 		print('Assuming the gas to follow the NFW profile.')
 		cv = cvir_fct(Mv,self.par.cosmo.z)
 		cosmo_bias = splev(Mv, self.bias_tck)
-		fE, dE, mE = bfc.profiles(self.rbin,Mv,cv,self.cosmo_corr,cosmo_bias,self.par)
+		# fE, dE, mE = bfc.profiles(self.rbin,Mv,cv,self.cosmo_corr,cosmo_bias,self.par)
+		fE, dE, mE = profiles(self.rbin,Mv,cv,self.cosmo_corr,cosmo_bias,self.par)
 
 		dens = dE['HGA'] #+ dE['BG'] # h^2 Msun/Mpc^3
 		dens_gas = dens*fE['HGA']  # h^2 Msun/Mpc^3
@@ -130,7 +132,8 @@ class deltaTkSZ:
 	def ne_NFW_profile(self, Mv):
 		cv = cvir_fct(Mv,self.par.cosmo.z)
 		cosmo_bias = splev(Mv, self.bias_tck)
-		fE, dE, mE = bfc.profiles(self.rbin,Mv,cv,self.cosmo_corr,cosmo_bias,self.par)
+		# fE, dE, mE = bfc.profiles(self.rbin,Mv,cv,self.cosmo_corr,cosmo_bias,self.par)
+		fE, dE, mE = profiles(self.rbin,Mv,cv,self.cosmo_corr,cosmo_bias,self.par)
 
 		dens_NFW = dE['NFW'] #+ dE['BG'] # h^2 Msun/Mpc^3
 		dens_gas_NFW = dens_NFW*self.par.cosmo.Ob/self.par.cosmo.Om  # h^2 Msun/Mpc^3

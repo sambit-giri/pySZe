@@ -17,7 +17,7 @@ cdist2angle = dataSchaan2020Fig7a['cdist2angle']
 
 def plot_TkSZ_f90(data=None, ax=None):
 	if ax is None:
-		fig, ax = plt.subplots(figsize=(12,8))
+		fig, ax = plt.subplots(figsize=(8,6))
 
 	xx, yy = dataSchaan2020Fig7a['f90']['r_cdist'], dataSchaan2020Fig7a['f90']['mean']
 	yu = np.array(dataSchaan2020Fig7a['f90']['mean+'])-np.array(dataSchaan2020Fig7a['f90']['mean'])
@@ -34,12 +34,14 @@ def plot_TkSZ_f90(data=None, ax=None):
 
 	ax.legend()
 	ax.set_yscale('log')
+	ax.set_ylabel('$T_\mathrm{kSZ}$ $[\mu K ~\mathrm{arcmin}^{2}]$')
+	ax.set_xlabel('$R$ $[\mathrm{arcmin}]$')
 	#ax.yaxis.set_major_formatter(ScalarFormatter())
 	return ax
 
 def plot_TkSZ_f150(data=None, ax=None):
 	if ax is None:
-		fig, ax = plt.subplots(figsize=(12,8))
+		fig, ax = plt.subplots(figsize=(8,6))
 
 	xx, yy = dataSchaan2020Fig7a['f150']['r_cdist'], dataSchaan2020Fig7a['f150']['mean']
 	yu = np.array(dataSchaan2020Fig7a['f150']['mean+'])-np.array(dataSchaan2020Fig7a['f150']['mean'])
@@ -56,14 +58,16 @@ def plot_TkSZ_f150(data=None, ax=None):
 
 	ax.legend()
 	ax.set_yscale('log')
+	ax.set_ylabel('$T_\mathrm{kSZ}$ $[\mu K ~\mathrm{arcmin}^{2}]$')
+	ax.set_xlabel('$R$ $[\mathrm{arcmin}]$')
 	#ax.yaxis.set_major_formatter(ScalarFormatter())
 	return ax
-
 
 
 ax = plot_TkSZ_f90()
 ax = plot_TkSZ_f150(ax=ax)
 ax.legend()
+plt.tight_layout()
 plt.show()
 
 
