@@ -10,8 +10,6 @@ from astropy.cosmology import Planck15 as cosmo
 from astropy import units, constants 
 
 import pySZe
-import pySZe as bfc
-# import baryonification as bfc
 
 from matplotlib import rcParams, ticker, cm
 rcParams['font.family'] = 'sans-serif'
@@ -22,7 +20,7 @@ rcParams['font.size']       = 13
 rcParams['axes.linewidth']  = 1.6
 
 
-par = bfc.par()
+par = pySZe.par()
 
 # COSMO PARAMETERS ################################################
 
@@ -44,7 +42,6 @@ print("Cosmic baryon fraction = ", fbar)
 par.files.transfct = "CDM_PLANCK_tk.dat"
 par.files.cosmofct = "cosmofct.dat"
 par.cosmo.z = 0.55
-par.baryon.thco = 0.1
 par.code.eps = 1
 
 Mv = 3e13*par.cosmo.h0 

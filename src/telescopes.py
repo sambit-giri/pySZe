@@ -82,8 +82,8 @@ class ACT:
 		self.dTkSZ_arcmins_grid_f150_thetad = dTkSZ_arcmins_grid_f150_thetad
 
 		return None 
-
-	def plot_Schaan2020(self, ax=None):
+	
+	def data_Schaan2020(self):
 		ACT_f90_mean = np.array([[1.053763440860215, 0.09412049672680661],
 								[1.6774193548387095, 0.7690683028568883],
 								[2.311827956989247, 1.7963293461795375],
@@ -163,19 +163,40 @@ class ACT:
 							[5.311827956989246, 13.00274626174631],
 							[5.999999999999999, 13.268047497147224]
 							]).T
+		return {
+			'ACT_f90_mean': ACT_f90_mean, 
+			'ACT_f90_up'  : ACT_f90_up,
+			'ACT_f90_dn'  : ACT_f90_dn,
+			'ACT_f150_mean': ACT_f150_mean, 
+			'ACT_f150_up'  : ACT_f150_up,
+			'ACT_f150_dn'  : ACT_f150_dn,
+			'NFW_f90' : NFW_f90,
+			'NFW_f150': NFW_f150,
+	  		}
+
+	def plot_Schaan2020(self, ax=None):
+		Schaan2020data = self.data_Schaan2020()
+		NFW_f90, NFW_f150 = Schaan2020data['NFW_f90'], Schaan2020data['NFW_f150']
+		ACT_f90_mean, ACT_f90_up, ACT_f90_dn = Schaan2020data['ACT_f90_mean'], Schaan2020data['ACT_f90_up'], Schaan2020data['ACT_f90_dn']
+		ACT_f150_mean, ACT_f150_up, ACT_f150_dn = Schaan2020data['ACT_f150_mean'], Schaan2020data['ACT_f150_up'], Schaan2020data['ACT_f150_dn']
 		if ax is None: fig, ax = plt.subplots(figsize=(8,6))
-		ax.errorbar(ACT_f90_mean[0], ACT_f90_mean[1], yerr=[ACT_f90_up[1]-ACT_f90_mean[1],ACT_f90_mean[1]-ACT_f90_dn[1]], c='m', ms=15, ls=' ', alpha=0.99, label='90GHz (Schaan et al. 2021)', marker='.')
-		ax.errorbar(ACT_f150_mean[0], ACT_f150_mean[1], yerr=[ACT_f150_up[1]-ACT_f150_mean[1],ACT_f150_mean[1]-ACT_f150_dn[1]], c='b', ms=15, ls=' ', alpha=0.99, label='150GHz (Schaan et al. 2021)', marker='.')
-		ax.plot(NFW_f90[0], NFW_f90[1], c='m', ms=15, ls='--', alpha=0.99, label='NFW, 90GHz (Schaan et al. 2021)')
-		ax.plot(NFW_f150[0], NFW_f150[1], c='b', ms=15, ls='--', alpha=0.99, label='NFW, 150GHz (Schaan et al. 2021)')
-		if self.dTkSZ_arcmins_grid_f90_thetad is not None: ax.loglog(self.thetad_s, self.dTkSZ_arcmins_grid_f90_thetad , c='grey', ls='-.', lw=3, label='NFW, 90GHz (pySZe)')
-		if self.dTkSZ_arcmins_grid_f150_thetad is not None: ax.loglog(self.thetad_s, self.dTkSZ_arcmins_grid_f150_thetad, c='grey', ls=':', lw=3, label='NFW, 150GHz (pySZe)')
-		ax.axis([0.5,6.5,0.03,70])
-		ax.set_xscale('linear')
-		ax.set_yscale('log')
-		ax.set_ylabel(r'$T_\mathrm{kSZ}$ [$\mu K~\mathrm{arcmin}^2$]')
-		ax.set_xlabel(r'$R$ [arcmin]')
-		ax.legend()
+		try: ax1, ax2 = ax
+		except: ax1, ax2 = ax, ax
+		ax1.errorbar(ACT_f90_mean[0], ACT_f90_mean[1], yerr=[ACT_f90_up[1]-ACT_f90_mean[1],ACT_f90_mean[1]-ACT_f90_dn[1]], c='m', ms=15, ls=' ', alpha=0.99, label='90GHz (Schaan et al. 2021)', marker='.')
+		ax2.errorbar(ACT_f150_mean[0], ACT_f150_mean[1], yerr=[ACT_f150_up[1]-ACT_f150_mean[1],ACT_f150_mean[1]-ACT_f150_dn[1]], c='b', ms=15, ls=' ', alpha=0.99, label='150GHz (Schaan et al. 2021)', marker='.')
+		ax1.plot(NFW_f90[0], NFW_f90[1], c='m', ms=15, ls='--', alpha=0.99, label='NFW, 90GHz (Schaan et al. 2021)')
+		ax2.plot(NFW_f150[0], NFW_f150[1], c='b', ms=15, ls='--', alpha=0.99, label='NFW, 150GHz (Schaan et al. 2021)')
+		if self.dTkSZ_arcmins_grid_f90_thetad is not None: 
+			ax1.loglog(self.thetad_s, self.dTkSZ_arcmins_grid_f90_thetad , c='grey', ls='-.', lw=3, label='NFW, 90GHz (pySZe)')
+		if self.dTkSZ_arcmins_grid_f150_thetad is not None: 
+			ax2.loglog(self.thetad_s, self.dTkSZ_arcmins_grid_f150_thetad, c='grey', ls=':', lw=3, label='NFW, 150GHz (pySZe)')
+		for ax in [ax1,ax2]:
+			ax.axis([0.5,6.5,0.03,70])
+			ax.set_xscale('linear')
+			ax.set_yscale('log')
+			ax.set_ylabel(r'$T_\mathrm{kSZ}$ [$\mu K~\mathrm{arcmin}^2$]')
+			ax.set_xlabel(r'$R$ [arcmin]')
+			ax.legend()
 		# plt.tight_layout()
 		# plt.show()
 
