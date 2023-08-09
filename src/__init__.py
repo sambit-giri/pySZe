@@ -16,6 +16,8 @@ from . import cosmo
 from . import profiles
 from .telescopes import * 
 
+from . import gertsenshtein_effect
+
 #Suppress warnings from zero-divisions and nans
 import numpy
 numpy.seterr(all='ignore')
