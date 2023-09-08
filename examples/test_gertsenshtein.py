@@ -129,3 +129,31 @@ ax.loglog(f_list, stochGW.gw_overdensity_to_characteristic_strain(par.cosmo.Og,f
 	    c='k', ls=':')
 ax.axis([5e5,6e10,9.5e-33,4.5e-12])
 plt.show()
+
+
+TbyW = 1.
+Ogw_by_Og = 1.
+Ar_to_TbyW2P = lambda Ar,z: 15/np.pi**4*TbyW**-1*(18.2/(1+z))**(-2.6)*Ar*(Ogw_by_Og)**-1
+
+fig, ax = plt.subplots(1,1,figsize=(8, 6))
+pcm = ax.pcolormesh(np.log10(lam0_B_list), np.log10(B0_list), np.log10(P[zz[0]]), cmap=cmap)
+for contour_level in np.arange(-37,-10,3): 
+	
+	cs1 = ax.contour(np.log10(lam0_B_list), np.log10(B0_list), np.log10(P[20]), levels=[contour_level], colors=contour_color, linewidths=2, linestyles='-')
+	cs2 = ax.contour(np.log10(lam0_B_list), np.log10(B0_list), np.log10(P[1100]), levels=[contour_level], colors=contour_color, linewidths=2, linestyles='--')
+	ax.clabel(cs1, inline=True, fmt=r'$10^{%d}$'%contour_level, fontsize=10, inline_spacing=10)
+ax.yaxis.set_major_formatter(ticker.FuncFormatter(format_tick_raise_to_exponent_d))
+ax.xaxis.set_major_formatter(ticker.FuncFormatter(format_tick_raise_to_exponent_d))
+ax.xaxis.set_major_locator(ticker.MaxNLocator(8))
+ax.yaxis.set_major_locator(ticker.MaxNLocator(8))
+ax.tick_params(axis='both', which='major', labelsize=13)
+ax.tick_params(axis='both', which='minor', labelsize=8)
+ax.set_xlabel('coherence length $\lambda^0_\mathrm{B}$ [Mpc]', fontsize=18)
+ax.set_ylabel('magnetic field $B_0$ [G]', fontsize=18)
+cbar = plt.colorbar(pcm)
+cbar_label = r'log$_\mathrm{10}\left[\left(\frac{T_0}{\omega_0}\right)^2\mathcal{P}\right]$'
+cbar.set_label(label=cbar_label, fontsize=18)
+cbar.ax.tick_params(labelsize=13)
+plt.subplots_adjust(left=0.12, bottom=0.11, right=0.97, top=0.97, hspace=0.5, wspace=0.5)
+# plt.tight_layout()
+plt.show()

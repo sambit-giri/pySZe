@@ -40,6 +40,8 @@ def baryon_par():
         "Mstar": 2.5e11,  # Stellar critical mass [fstar = Nstar*(Mstar/Mvir)**eta]
         "eta": 0.32,      # exponent of total stellar fraction [fstar = Nstar*(Mstar/Mvir)**eta]
         "deta": 0.28,     # exponent of central stellar fraction [fstar = Nstar*(Mstar/Mvir)**(eta+deta)]
+        "rhoc": 2.776e11, # critical density
+        "Deltavir": 200., # overdensity with respect to rhoc
         }
     return Bunch(par)
 
@@ -65,6 +67,7 @@ def code_par():
         "rbuffer": 10.0, # buffer size to take care of boundary conditions
         "eps": 4.0,      # truncation factor: eps=rtr/rvir 
         "beta_model": 0, # 0: old model from Schneider+18 1: new model
+        "verbose": False,
         }
     return Bunch(par)
 

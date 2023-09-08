@@ -140,7 +140,7 @@ def cosmo(param):
     itd = lambda logk: np.exp((3.0+ns)*logk) * splev(np.exp(logk),TF_tck)**2.0 * wf(np.exp(logk)*R)**2.0
     itl = quad(itd, np.log(kmin), np.log(kmax), epsrel=5e-3, limit=100)
     A_NORM = 2.0 * np.pi**2.0 * s8**2.0 / itl[0]
-    print('Normalizing power-spectrum done!')
+    if param.code.verbose: print('Normalizing power-spectrum done!')
 
     bin_N = 100
     bin_r = np.logspace(np.log(rmin),np.log(rmax),bin_N,base=np.e)

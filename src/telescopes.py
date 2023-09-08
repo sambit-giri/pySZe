@@ -28,7 +28,7 @@ class ACT:
 		'''
 		G_fwhm  = 2.1 # arcmin
 		G_sigma = G_fwhm/2.355 #(2*np.sqrt(2*np.log(2)))
-		print('f90', 2*np.pi*G_sigma**2)
+		if self.par.code.verbose: print('f90', 2*np.pi*G_sigma**2)
 		return np.exp(-theta**2/G_sigma**2/2)
 
 	def B_f150(self, theta):
@@ -37,7 +37,7 @@ class ACT:
 		'''
 		G_fwhm  = 1.3 # arcmin
 		G_sigma = G_fwhm/2.355 #(2*np.sqrt(2*np.log(2)))
-		print('f150', 2*np.pi*G_sigma**2)
+		if self.par.code.verbose: print('f150', 2*np.pi*G_sigma**2)
 		return np.exp(-theta**2/G_sigma**2/2)
 
 	def W_thetad(self, theta, thetad):
@@ -71,7 +71,7 @@ class ACT:
 		thetad_s = np.linspace(1,6,11) #10**np.linspace(np.log10(1),np.log10(6),11)
 		dTkSZ_arcmins_grid_f90_thetad  = np.zeros_like(thetad_s)
 		dTkSZ_arcmins_grid_f150_thetad = np.zeros_like(thetad_s)
-		for i in tqdm(range(thetad_s.size)):
+		for i in tqdm(range(thetad_s.size), disable=not self.par.code.verbose):
 			thd = thetad_s[i]
 			Wd = self.W_thetad(theta_r,thd)
 			dTkSZ_arcmins_grid_f90_thetad[i] = simps(simps(dTkSZ_arcmins_grid_f90*Wd, theta_uniq), theta_uniq)

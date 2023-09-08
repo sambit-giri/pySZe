@@ -1,4 +1,5 @@
 import numpy as np
+import warnings
 
 import scipy.interpolate as interpolate
 import scipy.integrate as integrate
@@ -117,7 +118,7 @@ class deltaTkSZ:
 		return ne_gas_fun
 
 	def ne_gas_profile(self, Mv):
-		print('Assuming the gas to follow the NFW profile.')
+		if self.par.code.verbose: print('Assuming the gas to follow the NFW profile.')
 		cv = cvir_fct(Mv,self.par.cosmo.z)
 		cosmo_bias = splev(Mv, self.bias_tck)
 		# fE, dE, mE = bfc.profiles(self.rbin,Mv,cv,self.cosmo_corr,cosmo_bias,self.par)
@@ -142,9 +143,10 @@ class deltaTkSZ:
 		return self.density_to_ne(dens_gas_NFW)
 
 	def tau_gal(self, ne_gas_fun):
+		if not self.par.code.verbose: warnings.filterwarnings("ignore") # Suppress warnings
 		theta_arcmins = 10**np.linspace(-2,1,100) #np.linspace(0.001,10,100)
 		tau_arcmins   = np.zeros_like(theta_arcmins)
-		for i in tqdm(range(theta_arcmins.size)): 
+		for i in tqdm(range(theta_arcmins.size), disable=not self.par.code.verbose): 
 			th = theta_arcmins[i]*self.arcmins_to_rad
 			fn = lambda x: ne_gas_fun(x)/np.sqrt(x**2-self.dang**2*th**2)*x
 			tau_arcmins[i] = 2*self.sig_T*quad(fn, np.abs(self.dang*th), 30)[0] * self.mpc_to_cm 

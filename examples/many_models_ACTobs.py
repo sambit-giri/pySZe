@@ -27,11 +27,11 @@ par = pySZe.par()
 
 # COSMO PARAMETERS ################################################
 
-Deltavir     = 200.0      #overdensity with respect to rhoc
 par.cosmo.Ob = 0.044
 par.cosmo.Om = 0.25
 par.cosmo.h0 = 0.7
-rhoc         = 2.776e11
+
+par.code.verbose = False
 
 #proton number density in 1/cm^3
 Msun_Mpc3_to_1_cm3 = (1.189e57/2.939e+73)
