@@ -154,8 +154,8 @@ class deltaTkSZ:
 		self.theta_arcmins = theta_arcmins
 		return self.tau_arcmins, self.theta_arcmins
 
-	def dTkSZ_map(self, ne_gas_fun):
-		vpec_by_c = 1.06e-3
+	def dTkSZ_map(self, ne_gas_fun, **kwargs):
+		vpec_by_c = kwargs.get('vpec_by_c', 1.06e-3)
 		tau_arcmins, theta_arcmins = self.tau_gal(ne_gas_fun)
 		dTkSZ_arcmins = tau_arcmins*vpec_by_c*self.Tcmb_muK
 		dTkSZ_arcmins_tck = splrep(np.log10(theta_arcmins), np.log10(dTkSZ_arcmins))
@@ -164,10 +164,10 @@ class deltaTkSZ:
 		self.dTkSZ_arcmins = dTkSZ_arcmins
 		return dTkSZ_arcmins_fun
 
-	def run(self, Mv, NFW=False):
+	def run(self, Mv, NFW=False, **kwargs):
 		if NFW: ne_gas_fun = self.ne_NFW_profile(Mv)
 		else: ne_gas_fun = self.ne_gas_profile(Mv)
-		self.dTkSZ_arcmins_fun = self.dTkSZ_map(ne_gas_fun)
+		self.dTkSZ_arcmins_fun = self.dTkSZ_map(ne_gas_fun, **kwargs)
 
 
 
