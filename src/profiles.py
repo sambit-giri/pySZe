@@ -29,13 +29,17 @@ def r500_fct(r200,c):
     return y0*r200
 
 
-def rvir_fct(r200,c):
+def rvir_fct(r500,c):
     """
     From r500 to r200 assuming a NFW profile
     """
     f = lambda y: np.log(1.0+c*y) - c*y/(1.0+c*y) - 96.0/200.0*(np.log(1.0+c)-c/(1.0+c))*y**3.0
     y0 = fsolve(f,1.0)
-    return y0*r200
+    return y0*r500
+
+def mvir_to_rvir(Mvir,param):
+    rvir = (3.0*Mvir/(4.0*np.pi*DELTAVIR*rhoc_of_z(param)))**(1.0/3.0)
+    return rvir
 
 
 def M500_fct(M200,c):
